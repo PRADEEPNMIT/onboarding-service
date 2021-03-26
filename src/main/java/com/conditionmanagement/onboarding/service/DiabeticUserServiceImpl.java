@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 public class DiabeticUserServiceImpl implements DiabeticUserService{
@@ -32,6 +34,16 @@ public class DiabeticUserServiceImpl implements DiabeticUserService{
 
         return diabeticUserRepository.findByUserName(userName);
      }
+
+    @Override
+    public Optional<DiabeticUser> findById(long id) {
+        return diabeticUserRepository.findById(id);
+    }
+
+    @Override
+    public void deleteById(long id) {
+        diabeticUserRepository.deleteById(id);
+    }
 
 
 }

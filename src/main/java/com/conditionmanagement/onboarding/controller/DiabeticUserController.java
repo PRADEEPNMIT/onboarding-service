@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.*;
 import java.net.URI;
+import java.util.Optional;
 
 
 @RestController
@@ -83,5 +84,18 @@ public class DiabeticUserController {
             return true;
         }
         return false;
+    }
+
+    @DeleteMapping("/deleteUser/{id}")
+    public String deleteDiabeticUser(@PathVariable long id, HttpServletRequest request) {
+
+        if (id != 0) {
+            Optional<DiabeticUser> existingDiabeticUser2 = diabeticUserService.findById(id);
+            if(existingDiabeticUser2.isPresent()){
+                diabeticUserService.deleteById(id);
+            }
+            return ResponseEntity.ok().build().toString();
+        }
+            return null;
     }
 }
