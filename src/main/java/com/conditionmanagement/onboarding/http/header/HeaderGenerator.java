@@ -1,0 +1,41 @@
+package com.conditionmanagement.onboarding.http.header;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Service;
+
+@Service
+public class HeaderGenerator {
+
+    public HttpHeaders getHeadersForSuccessGetMethod() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-Type", "application/json; charset=UTF-8");
+
+        return httpHeaders;
+    }
+
+    public HttpHeaders getHeadersForError() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+      //  httpHeaders.add("Content-Type", "application/problem+json; charset=UTF-8");
+        httpHeaders.add("Error Occurred", "User name already used. Try with other usernames");
+
+        System.out.println("Error httpHeaders"+httpHeaders);
+
+        return httpHeaders;
+    }
+
+    public HttpHeaders getHeadersForSuccessPostMethod(HttpServletRequest request, Long newResourceId) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        try {
+            httpHeaders.setLocation(new URI(request.getRequestURI() + "/" + newResourceId));
+            System.out.println("httpHeaders"+httpHeaders);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        httpHeaders.add("Content-Type", "application/json; charset=UTF-8");
+        return httpHeaders;
+    }
+
+}
